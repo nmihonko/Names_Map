@@ -5,9 +5,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataHandler {
 
-    Map<Integer, String> map = new DataRepository().getData();
+    private final DataRepository dataRepository;
+
+    public DataHandler(DataRepository dataRepository) {
+        this.dataRepository = dataRepository;
+    }
 
     public String getAll() {
+        Map<Integer, String> map = dataRepository.getData();
         if (map == null) {
             throw new IllegalArgumentException("Map cannot be null");
         }
@@ -17,46 +22,28 @@ public class DataHandler {
         }
 
         StringBuilder sb = new StringBuilder();
-        AtomicInteger count = new AtomicInteger(0);
+        int count = 1;
 
-        map.forEach((id, name) -> sb.append(String.format("%d) %d, %s%n", count.incrementAndGet(), id, name)));
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            sb.append("%d) %d, %s%n".formatted(count, entry.getKey(), entry.getValue()));
+            count++;
+        }
 
         return "\nALL NAMES:\n" + sb;
     }
 
     public String getById(int id) {
+
         if (id <= 0) {
             throw new IllegalArgumentException("Id must be greater than 0");
         }
 
-        if (map == null) {
-            throw new IllegalArgumentException("Map cannot be null");
-        }
+        Map<Integer, String> map = dataRepository.getData();
 
-        if (map.containsKey(id)) {
-            return "\nNAME: id " + id + ", " + map.get(id);
+        if (!map.containsKey(id)) {
+            throw new IllegalArgumentException("No data found by id %d".formatted(id));
         } else {
-            throw new IllegalArgumentException("No data found by id " + id);
+            return "\nNAME: id %d, %s".formatted(id, map.get(id));
         }
-    }
-
-    public void setData(int id, String name) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Id must be greater than 0");
-        }
-
-        if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null");
-        }
-
-        if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be empty");
-        }
-
-        if (map == null) {
-            throw new IllegalArgumentException("Map cannot be null");
-        }
-
-        map.put(id, name);
     }
 }

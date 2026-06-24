@@ -4,16 +4,17 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            DataHandler handler = new DataHandler();
+            DataRepository dataRepository = new DataRepository();
+            DataHandler handler = new DataHandler(dataRepository);
             UIOperator uiOperator = new UIOperator();
 
-            handler.setData(123, "e");
-            handler.setData(234, "dfg");
-            handler.setData(345, "dfg");
-            handler.setData(456, "f");
-            handler.setData(567, "asd");
-            handler.setData(678, "ASasdasDasd");
-            handler.setData(789, "fggfdg");
+            dataRepository.setData(123, "e");
+            dataRepository.setData(234, "dfg");
+            dataRepository.setData(345, "dfg");
+            dataRepository.setData(456, "f");
+            dataRepository.setData(567, "asd");
+            dataRepository.setData(678, "ASasdasDasd");
+            dataRepository.setData(789, "fggfdg");
 
             uiOperator.getOutput(handler.getAll());
 
@@ -22,7 +23,7 @@ public class Main {
             uiOperator.getOutput(handler.getById(789));
             uiOperator.getOutput(handler.getById(7891));
 
-        } catch (Exception e) {
+        } catch (IllegalArgumentException  e) {
             System.out.println(e.getMessage());
         }
     }
