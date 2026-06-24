@@ -1,5 +1,7 @@
 package app;
 
+import java.io.IOException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -23,7 +25,7 @@ public class Main {
             uiOperator.getOutput(handler.getById(789));
             uiOperator.getOutput(handler.getById(7891));
 
-        } catch (IllegalArgumentException  e) {
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
     }
