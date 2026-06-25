@@ -12,9 +12,6 @@ public class DataHandler {
 
     public String getAll() {
         Map<Integer, String> map = dataRepository.getData();
-        if (map == null) {
-            throw new IllegalArgumentException("Map cannot be null");
-        }
 
         if (map.isEmpty()) {
             return "\nNo data!";

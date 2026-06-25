@@ -5,11 +5,12 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            DataRepository dataRepository = new DataRepository();
-            DataHandler handler = new DataHandler(dataRepository);
-            UIOperator uiOperator = new UIOperator();
 
+        DataRepository dataRepository = new DataRepository();
+        DataHandler handler = new DataHandler(dataRepository);
+        UIOperator uiOperator = new UIOperator();
+
+        try {
             dataRepository.setData(123, "e");
             dataRepository.setData(234, "dfg");
             dataRepository.setData(345, "dfg");
@@ -25,7 +26,7 @@ public class Main {
             uiOperator.getOutput(handler.getById(789));
             uiOperator.getOutput(handler.getById(7891));
 
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
